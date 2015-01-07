@@ -11,7 +11,7 @@ You may assume no duplicate exists in the array.
 */
 
 /*
- 思路：根据排序好的数字序列被旋转后的特征，可将序列分为 2 个有序的子序列。
+ 思路一：根据排序好的数字序列被旋转后的特征，可将序列分为 2 个有序的子序列。
        首先，找到前后两个序列相邻的元素下标；
        然后，对两个子序列分别利用二分查找
  */
@@ -58,4 +58,35 @@ int search(int A[], int n, int target) {
     result = binarySearch(A, secondBeg, n - 1, target);
 
     return result;
+}
+
+/*
+ 思路二： 直接使用二分查找。需要注意左右两个子序列边界的确定
+ */
+
+int search(int A[], int n, int target) {
+    int low = 0, high = n - 1;
+    int mid = (low + high) / 2;
+
+    while( low <= high) {
+        if(A[mid] == target)
+            return mid;
+        
+        if(A[low] <= A[mid]) { // mid 
+            if(A[low] <= target && target < A[mid])
+                high = mid - 1;
+            else
+                low = mid + 1;
+
+        } else {
+            if(target > A[mid] && target <= A[high])
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+
+        mid = (high + low) / 2;
+    }
+
+    return -1;
 }
