@@ -72,13 +72,13 @@ int search(int A[], int n, int target) {
         if(A[mid] == target)
             return mid;
         
-        if(A[low] <= A[mid]) { // mid 
+        if(A[low] <= A[mid]) { // mid 位于前面的子序列的情况
             if(A[low] <= target && target < A[mid])
                 high = mid - 1;
             else
                 low = mid + 1;
 
-        } else {
+        } else {            // mid 位于后面的子序列的情况
             if(target > A[mid] && target <= A[high])
                 low = mid + 1;
             else
